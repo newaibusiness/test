@@ -1,0 +1,21 @@
+<script src="https://cdn.jsdelivr.net/npm/@fingerprintjs/fingerprintjs@3/dist/fp.min.js"></script>
+<script>
+    FingerprintJS.load().then(fp => fp.get()).then(result => {
+        const visitorId = result.visitorId;
+        const components = result.components;
+
+        // Compare user agent with other detected components
+        const userAgent = navigator.userAgent;
+        const isChrome = !!components.chrome;
+        const isSafari = !!components.safari;
+
+        if (isChrome && userAgent.includes('Safari') && !userAgent.includes('Chrome')) {
+            alert("Discrepancy detected: User agent claims Safari, but browser appears to be Chrome.");
+        } else if (isSafari && userAgent.includes('Chrome')) {
+            alert("Discrepancy detected: User agent claims Chrome, but browser appears to be Safari.");
+        } else {
+            alert("No discrepancy detected.");
+        }
+    });
+</script>
+
